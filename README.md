@@ -26,7 +26,7 @@ Method | Endpoint | Functionality
 POST | `/user` | Create a user
 POST | `/admin` | Create a admin user
 GET | `/login` | Login a user 
-DELETE | `//user/<public_id>` | Delete user
+DELETE | `/user/<public_id>` | Delete user
 
 #### Todo Endpoints
 
