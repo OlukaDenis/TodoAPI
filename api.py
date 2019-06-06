@@ -25,6 +25,9 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean)
     user_id = db.Column(db.Integer)
 
+@app.route('/index')
+def index():
+    return "<h2>Welcome to TodoAPI </h2>"
 
 @app.route('/user', methods=['GET'])
 def get_all_users():
@@ -72,8 +75,6 @@ def create_user():
 
 @app.route('/user/<public_id>', methods=['PUT'])
 def update_user(public_id):
-    if not current_user.admin:
-        return jsonify({'message' : 'You have no admin rights, you cannot perform this action!'})
 
     user = User.query.filter_by(public_id=public_id).first()
     if not user:
@@ -84,8 +85,6 @@ def update_user(public_id):
 
 @app.route('/user/<public_id>', methods=['DELETE'])
 def delete_user(public_id):
-    if not current_user.admin:
-        return jsonify({'message' : 'You have no admin rights, you cannot perform this action!'})
 
     user = User.query.filter_by(public_id=public_id).first()
     if not user:
@@ -148,7 +147,7 @@ def get_one_todo(todo_id):
 def create_todo():
     data = request.get_json()
 
-    new_todo = Todo(text=data['text'], complete=False, user_id=current_user.id)
+    new_todo = Todo(text=data['text'], complete=False)
     db.session.add(new_todo)
     db.session.commit()
 
@@ -157,7 +156,7 @@ def create_todo():
 
 @app.route('/todo/<todo_id>', methods=['PUT'])
 def complete_todo(todo_id):
-    todo = Todo.query.filter_by(id=todo_id, user_id=current_user.id).first()
+    todo = Todo.query.filter_by(id=todo_id).first()
 
     if not todo:
         return jsonify({'Message': 'No todo found, please add some'})
@@ -169,7 +168,7 @@ def complete_todo(todo_id):
 
 @app.route('/todo/<todo_id>', methods=['DELETE'])
 def delete_todo(todo_id):
-    todo = Todo.query.filter_by(id=todo_id, user_id=current_user.id).first()
+    todo = Todo.query.filter_by(id=todo_id).first()
 
     if not todo:
         return jsonify({'Message': 'No todo found'})
