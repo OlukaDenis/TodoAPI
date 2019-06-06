@@ -4,7 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import uuid 
 import datetime
 import jwt
-from functools import wraps
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Denis Oluka'
@@ -26,32 +25,9 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean)
     user_id = db.Column(db.Integer)
 
-def token_required(tkn):
-    @wraps(tkn)
-    def decorated(*args, **kwargs):
-        token = None
-        
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
-
-        if not token:
-            return jsonify({'message' : 'Token is missing!'}), 401
-
-        try:
-            data = jwt.decode(token, app.config['SECRET_KEY'])
-            current_user = User.query.filter_by(public_id=data['public_id']).first()
-        except:
-            return jsonify({'message' : 'Token is invalid!'}), 401
-        
-        return tkn(current_user, *args, **kwargs)
-    return decorated
 
 @app.route('/user', methods=['GET'])
-@token_required
-def get_all_users(current_user):
-    if not current_user.admin:
-        return jsonify({'message' : 'You have no admin rights, you cannot perform this action!'})
-
+def get_all_users():
     users = User.query.all()
     output = []
     for user in users:
@@ -64,10 +40,7 @@ def get_all_users(current_user):
     return jsonify({'users': output})
 
 @app.route('/user/<public_id>', methods=['GET'])
-@token_required
-def get_one_user(current_user, public_id):
-    if not current_user.admin:
-        return jsonify({'message' : 'You have no admin rights, you cannot perform this action!'})
+def get_one_user(public_id):
 
     user = User.query.filter_by(public_id=public_id).first()
     if not user:
@@ -98,8 +71,7 @@ def create_user():
     return jsonify({'message':'New user created succesfully'})
 
 @app.route('/user/<public_id>', methods=['PUT'])
-@token_required
-def update_user(current_user, public_id):
+def update_user(public_id):
     if not current_user.admin:
         return jsonify({'message' : 'You have no admin rights, you cannot perform this action!'})
 
@@ -111,8 +83,7 @@ def update_user(current_user, public_id):
     return jsonify({'message': 'The user has been updated to admin'})
 
 @app.route('/user/<public_id>', methods=['DELETE'])
-@token_required
-def delete_user(current_user, public_id):
+def delete_user(public_id):
     if not current_user.admin:
         return jsonify({'message' : 'You have no admin rights, you cannot perform this action!'})
 
@@ -142,11 +113,9 @@ def  login():
 
 
 #The routes for the todos
-
 @app.route('/todo', methods=['GET'])
-@token_required
-def get_all_todos(current_user):
-    todos = Todo.query.filter_by(user_id = current_user.id).all()
+def get_all_todos():
+    todos = Todo.query.all()
 
     output = []
 
@@ -161,12 +130,11 @@ def get_all_todos(current_user):
 
 
 @app.route('/todo/<todo_id>', methods=['GET'])
-@token_required
-def get_one_todo(current_user, todo_id):
-    todo = Todo.query.filter_by(id=todo_id, user_id=current_user.id).first()
+def get_one_todo(todo_id):
+    todo = Todo.query.first()
 
     if not todo:
-        return jsonify({'Message': 'No to do found, please add some'})
+        return jsonify({'Message': 'You have not created any todo!'})
 
     todo_data = {}
     todo_data['id'] = todo.id
@@ -177,8 +145,7 @@ def get_one_todo(current_user, todo_id):
 
 
 @app.route('/todo', methods=['POST'])
-@token_required
-def create_todo(current_user):
+def create_todo():
     data = request.get_json()
 
     new_todo = Todo(text=data['text'], complete=False, user_id=current_user.id)
@@ -189,8 +156,7 @@ def create_todo(current_user):
 
 
 @app.route('/todo/<todo_id>', methods=['PUT'])
-@token_required
-def complete_todo(current_user, todo_id):
+def complete_todo(todo_id):
     todo = Todo.query.filter_by(id=todo_id, user_id=current_user.id).first()
 
     if not todo:
@@ -202,8 +168,7 @@ def complete_todo(current_user, todo_id):
 
 
 @app.route('/todo/<todo_id>', methods=['DELETE'])
-@token_required
-def delete_todo(current_user, todo_id):
+def delete_todo(todo_id):
     todo = Todo.query.filter_by(id=todo_id, user_id=current_user.id).first()
 
     if not todo:
