@@ -125,7 +125,7 @@ def get_all_todos():
         todo_data['complete'] = todo.complete
         output.append(todo_data)
 
-    return jsonify({'todos': output})
+    return jsonify(output)
 
 
 @app.route('/todo/<todo_id>', methods=['GET'])
