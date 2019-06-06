@@ -25,9 +25,9 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean)
     user_id = db.Column(db.Integer)
 
-@app.route('/index')
+@app.route('/')
 def index():
-    return "<h2>Welcome to TodoAPI </h2>"
+    return '<h2>Welcome to TodoAPI </h2>'
 
 @app.route('/user', methods=['GET'])
 def get_all_users():
