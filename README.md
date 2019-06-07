@@ -2,8 +2,8 @@
 TodoAPI is an A RESTful api built on Python-Flask framework that allows a user to create, update and delete todos
 
 ## Badges
-[![Coverage Status](https://coveralls.io/repos/github/OlukaDenis/TodoAPI/badge.svg?branch=develop)](https://coveralls.io/github/OlukaDenis/TodoAPI?branch=develop)
-[![Build Status](https://travis-ci.com/OlukaDenis/TodoAPI.svg?branch=master)](https://travis-ci.com/OlukaDenis/TodoAPI)
+<!---[![Coverage Status](https://coveralls.io/repos/github/OlukaDenis/TodoAPI/badge.svg?branch=develop)](https://coveralls.io/github/OlukaDenis/TodoAPI?branch=develop)
+[![Build Status](https://travis-ci.com/OlukaDenis/TodoAPI.svg?branch=master)](https://travis-ci.com/OlukaDenis/TodoAPI)-->
 
 
 ## Features
