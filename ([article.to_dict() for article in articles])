@@ -1,0 +1,66 @@
+[33mcommit 81563a77bbdc9e066915634ab84aa31ec1cc4201[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Fri Jun 7 00:04:00 2019 +0300
+
+    Updated the todo route
+
+[33mcommit 17620f189e6104b75e889a4e2393716916935ed7[m[33m ([m[1;31mheroku/master[m[33m)[m
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Thu Jun 6 22:55:57 2019 +0300
+
+    updated the index route
+
+[33mcommit 12019bcfa2103bf637ddc6e675b4edf71bbe2891[m
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Thu Jun 6 22:50:59 2019 +0300
+
+    Added the home route
+
+[33mcommit b348852eb62d63aac6bb2f088d7efdedbab8112f[m
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Thu Jun 6 22:31:06 2019 +0300
+
+    changes in the procfile
+
+[33mcommit e414327fef702087ea1aada25feaf74bec24385e[m
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Thu Jun 6 22:27:33 2019 +0300
+
+    Updated the requirements
+
+[33mcommit 6d155165e049246d0c12e6efd1d811f3e103083f[m
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Thu Jun 6 22:21:27 2019 +0300
+
+    Restructured the api
+
+[33mcommit 53b0b624cb9b8f0c24a6c6dd45c329f46b97c9f9[m[33m ([m[1;31morigin/master[m[33m)[m
+Merge: b6c998a 22504ae
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Thu Jun 6 10:49:08 2019 +0300
+
+    Merge branch 'master' of https://github.com/OlukaDenis/TodoAPI
+
+[33mcommit b6c998a4331f375327a4b68c49c581b6f013cd61[m
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Thu Jun 6 10:48:03 2019 +0300
+
+    added the requirements.txt
+
+[33mcommit 22504ae27686258d34a369be282c4dbfa064889e[m
+Author: Oluka Denis <37341054+OlukaDenis@users.noreply.github.com>
+Date:   Wed Jun 5 13:06:23 2019 +0300
+
+    Update README.md
+
+[33mcommit cae387913b9032bd030eb7ddaf6e229b06b295cf[m
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Wed Jun 5 12:41:34 2019 +0300
+
+    Added the readme file
+
+[33mcommit 9b4fbd6d8e3bfe4dacada1ce177c5903012f0b3a[m
+Author: Oluka Denis <olukadeno@gmail.com>
+Date:   Wed Jun 5 09:19:26 2019 +0300
+
+    This is the first commit, all endpoints are working

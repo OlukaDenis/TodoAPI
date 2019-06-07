@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from models.model import Todo
 import uuid 
 import datetime
 import jwt
@@ -8,22 +9,9 @@ import jwt
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Denis Oluka'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./todo.db'
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-#User table
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    public_id = db.Column(db.String(50), unique=True)
-    name = db.Column(db.String(80))
-    password = db.Column(db.String(80))
-    admin = db.Column(db.Boolean)
-
-#Todo list table
-class Todo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(80))
-    complete = db.Column(db.Boolean)
-    user_id = db.Column(db.Integer)
+#db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
@@ -151,7 +139,7 @@ def create_todo():
     db.session.add(new_todo)
     db.session.commit()
 
-    return jsonify({'Message': 'Todo created successfully'})
+    return jsonify({'Message': 'Task created successfully'})
 
 
 @app.route('/todo/<todo_id>', methods=['PUT'])
@@ -159,11 +147,11 @@ def complete_todo(todo_id):
     todo = Todo.query.filter_by(id=todo_id).first()
 
     if not todo:
-        return jsonify({'Message': 'No todo found, please add some'})
+        return jsonify({'Message': 'No task found, please add some'})
 
     todo.complete = True
     db.session.commit()
-    return jsonify({'Message': 'Todo has been completed'})
+    return jsonify({'Message': 'Task has been completed'})
 
 
 @app.route('/todo/<todo_id>', methods=['DELETE'])
@@ -171,12 +159,14 @@ def delete_todo(todo_id):
     todo = Todo.query.filter_by(id=todo_id).first()
 
     if not todo:
-        return jsonify({'Message': 'No todo found'})
+        return jsonify({'Message': 'No task found'})
 
     db.session.delete(todo)
     db.session.commit()
 
-    return jsonify({'Message': 'Todo has been deleted successfully'})    
+    return jsonify({'Message': 'Task has been deleted successfully'})    
 
 if __name__ == '__main__':
+    from database.db import db
+    db.init_app(app)
     app.run(debug = True)
